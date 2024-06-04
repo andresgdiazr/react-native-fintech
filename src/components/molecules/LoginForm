@@ -1,0 +1,28 @@
+import React from 'react';
+import { FaEnvelope, FaLock } from 'react-icons/fa';
+import InputField from '../atoms/InputField';
+import Button from '../atoms/Button';
+import Icon from 'react-native-vector-icons/FontAwesome';
+
+const LoginForm = ({ email, setEmail, password, setPassword, onSubmit }) => {
+  return (
+    <>
+      <InputField
+        placeholder="Correo electrónico"
+        value={email}
+        onChangeText={setEmail}
+        icon={<Icon name="envelope" size={20} color="#555" />}
+      />
+      <InputField
+        placeholder="Contraseña"
+        value={password}
+        onChangeText={setPassword}
+        secureTextEntry
+        icon={<Icon name="lock" size={20} color="#555" />}
+      />
+      <Button onPress={onSubmit}>Iniciar sesión</Button>
+    </>
+  );
+};
+
+export default LoginForm;
