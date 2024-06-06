@@ -6,7 +6,7 @@ import MultiForm from './src/rutas/Registro/MultiForm';
 export default function App() {
   return (
     <View style={styles.container}>
-      <MultiForm/>
+      <LoginScreen />
     </View>
   );
 }
