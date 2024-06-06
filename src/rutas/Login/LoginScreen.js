@@ -44,6 +44,17 @@ const LoginScreen = () => {
         />
       </View>
 
+      
+        
+        <TextInput
+          style={styles.textInput}
+          value={password}
+          onChangeText={(text) => setPassword(text)}
+          secureTextEntry={true}
+          placeholder='Ingresa tu contraseña'
+        />
+      
+
       <ButtonCustomize title="Iniciar sesión" Press={handleLogin}/>
 
     </View> 

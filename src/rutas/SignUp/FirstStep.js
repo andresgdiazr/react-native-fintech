@@ -14,78 +14,47 @@ const LoginScreen = () => {
     console.log('Iniciando sesión con correo electrónico:', email, 'y contraseña:', password);
   };
 
-  
-  const Col = ({ numRows, children }) => {
-    return  (
-      <View style={styles[`${numRows}col`]}>{children}</View>
-    )
-  }
-  
-  const Row = ({ children }) => (
-    <View style={styles.row}>{children}</View>
-  )
-  
   return (
     <View style={styles.container}>
     <Icon name="chevron-left" size={0.1*width} color="#000" /> 
     
     <View style={styles.containerforms}>
     
-    <Text style={styles.title}>Información personal</Text>
+    <Text style={styles.title}>Registro de usuario</Text>
 
       <View style={styles.inputContainer}>
-        <Text style={styles.label}>Número de teléfono</Text>
-        
-
-      
-        <Row>
-        <Col numRows={1}>
-        <TextInput
-          style={styles.textInput}
-          placeholder='+58'
-          onChangeText={(text) => setEmail(text)}
-          keyboardType="email-address"
-          editable={false}
-        />
-        </Col>
-        <Col numRows={3}>
+        <Text style={styles.label}>Correo electrónico</Text>
         <TextInput
           style={styles.textInput}
           value={email}
-          placeholder='Ingresa tu número de teléfono'
+          placeholder='Ingresa tu e-mail'
           onChangeText={(text) => setEmail(text)}
           autoCapitalize="none"
           keyboardType="email-address"
         />
-        </Col>
-      </Row>
+      </View>
 
-        
-
-        
-    </View>
-
-    <View style={styles.inputContainer}>
-        <Text style={styles.label}>Dirección</Text>
-        
-        <View>
-        
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>Contraseña</Text>
         <TextInput
           style={styles.textInput}
-          value={email}
-          placeholder='Ingresa tu dirección'
-          onChangeText={(text) => setEmail(text)}
-          autoCapitalize="none"
-          keyboardType="email-address"
-          editable={false}
+          value={password}
+          onChangeText={(text) => setPassword(text)}
+          secureTextEntry={true}
+          placeholder='Ingresa tu contraseña'
         />
-        </View>
+      </View>
 
-        
-
-        
-    </View>
-
+      <View style={styles.inputContainer}>
+        <Text style={styles.label}>Verificar contraseña</Text>
+        <TextInput
+          style={styles.textInput}
+          value={verify}
+          onChangeText={(text) => setVerify(text)}
+          secureTextEntry={true}
+          placeholder='Ingresa tu contraseña'
+        />
+      </View>
 
       <ButtonCustomize title="Continuar" Press={handleLogin}/>
       
@@ -152,24 +121,6 @@ const styles = StyleSheet.create({
     fontSize: width * 0.04,
     color: '#00f',
   },
-  row: {
-        justifyContent: 'space-between',
-        flexDirection: "row",
-
-     
-  },
-  "1col":  {
-    flex:  1
-  },
-  "2col":  {
-    flex:  2
-  },
-  "3col":  {
-    flex:  3
-  },
-  "4col":  {
-    flex:  4
-  }
 });
 
 export default LoginScreen;
