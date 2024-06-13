@@ -6,9 +6,11 @@ const initialState = {
     apellido:'',
     cedula:'',
     numero:'',
+    direccion:'',
   };
   
   const formReducer = (state, action) => {
+    
     switch (action.type) {
       case 'NEXT_STEP':
         return { ...state, step: state.step + 1 };
