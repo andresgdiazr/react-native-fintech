@@ -1,5 +1,6 @@
 import React from 'react';
-import { Button, StyleSheet } from 'react-native-web';
+import { StyleSheet } from 'react-native-web';
+import { Button } from 'react-native-web';
 
 const ButtonCustomize = ({ onPress, children, title, Press }) => {
   return (
@@ -16,10 +17,9 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: '2ECC71',
     borderRadius: 5,
-    fontsize:12,
+    fontSize:12,
   },
 });
 
 export default ButtonCustomize;
-
 
