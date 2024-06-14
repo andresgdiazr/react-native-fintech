@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import MultiForm from './src/screens/SignUp/MultiForm';
 import LoginScreen from './src/screens/LogIn/LoginScreen';
+import Main from './src/screens/Main/Main';
 
 
 export default function App() {
