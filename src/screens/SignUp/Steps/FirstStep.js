@@ -5,30 +5,34 @@ import ButtonCustomize from '../../../Components/ButtomCustomize';
 
 const FirstStep = ({ nextStep, handleInput, form }) => {
  
-  const [{errorEmail, blankEmail,blankContraseña}, setFormErrors] = useState({
+  const [formErrors, setFormErrors] = useState({
     errorEmail: false,
     blankEmail: false,
     blankContraseña: false
   });
-  
+
+  const { errorEmail, blankEmail, blankContraseña } = formErrors;
+
   const handleSubmit = () => {
     const regex = /@/;
     const newErrors = {
-      errorEmail: form.nombre == '' ? "" : !regex.test(form.nombre),
-      blankEmail: form.nombre === '',
+      errorEmail: form.correo === '' ? false : !regex.test(form.correo),
+      blankEmail: form.correo === '',
       blankContraseña: form.contraseña === ''
     };
-  
+
     setFormErrors(newErrors);
-  
+
     if (newErrors.errorEmail) {
-      handleInput({ name: 'nombre', value: '' });
+      handleInput({ name: 'correo', value: '' });
     }
 
-    if (Object.values(newErrors).every(error => !error)) {
+    if (!newErrors.errorEmail && !newErrors.blankEmail && !newErrors.blankContraseña) {
       nextStep()
     }
   };
+
+  
   
 
   return (

@@ -1,9 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, Pressable, Platform } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ButtonCustomize from '../../../Components/ButtomCustomize';
 
 const SecondStep = ({ nextStep, handleInput, form }) => {
+ 
+  const [formErrors, setFormErrors] = useState({
+    blankNombre: false,
+    blankApellido: false,
+    blankCedula: false,
+  });
+ 
+  const {blankNombre,blankApellido, blankCedula} = formErrors;
+ 
+  const handleSubmit = () => {
+    
+    const newErrors = {
+      blankNombre: form.nombre === '',
+      blankApellido: form.apellido === '',
+      blankCedula: form.cedula === '',
+    };
+
+    setFormErrors(newErrors);
+    if (Object.values(newErrors).every(error => !error)) {
+      nextStep()
+    }
+
+  };
+
   return (
     <View style={styles.container}>
       <Icon name="chevron-left" size={Platform.OS === 'web' ? 40 : 30} color="#000" />
@@ -15,11 +39,11 @@ const SecondStep = ({ nextStep, handleInput, form }) => {
           <Text style={styles.label}>Nombre</Text>
           <TextInput
             style={styles.textInput}
+            onChangeText={(text) => handleInput({ name: 'nombre', value: text })}
             value={form.nombre}
             placeholder="Ingresa tu nombre"
-            onChangeText={(text) => handleInput('nombre', text)}
-            autoCapitalize="none"
           />
+          {blankNombre ? (<Text style={styles.error}>Completa este campo</Text>) : null }
         </View>
 
         <View style={styles.inputContainer}>
@@ -27,9 +51,10 @@ const SecondStep = ({ nextStep, handleInput, form }) => {
           <TextInput
             style={styles.textInput}
             value={form.apellido}
-            onChangeText={(text) => handleInput('apellido', text)}
+            onChangeText={(text) => handleInput({name: 'apellido', value: text})}
             placeholder="Ingresa tu apellido"
           />
+          {blankApellido ? (<Text style={styles.error}>Completa este campo</Text>) : null }
         </View>
 
         <View style={styles.inputContainer}>
@@ -37,12 +62,13 @@ const SecondStep = ({ nextStep, handleInput, form }) => {
           <TextInput
             style={styles.textInput}
             value={form.cedula}
-            onChangeText={(text) => handleInput('cedula', text)}
+            onChangeText={(text) => handleInput({name: 'cedula',value: text})}
             placeholder="Ingresa tu cédula"
           />
+          {blankCedula ? (<Text style={styles.error}>Completa este campo</Text>) : null }
         </View>
 
-        <ButtonCustomize title="Continuar" Press={nextStep} />
+        <ButtonCustomize title="Continuar" Press={handleSubmit} />
       </View>
 
       <View style={styles.registerContainer}>
@@ -104,6 +130,12 @@ const styles = StyleSheet.create({
     fontSize: Platform.OS === 'web' ? '1rem' : 16,
     color: '#00f',
   },
+  error:{
+    color:'red',
+    marginTop:2,
+    fontStyle: "italic",
+  },
 });
+
 
 export default SecondStep;
