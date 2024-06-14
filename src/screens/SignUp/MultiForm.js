@@ -3,10 +3,15 @@ import { initialState, formReducer } from '../../reducer/formReducer';
 import FirstStep from './Steps/FirstStep';
 import SecondStep from './Steps/SecondStep';
 import ThirdStep from './Steps/ThirdStep';
+import { useFetch } from '../../hooks/useFetch';
 
 const MultiForm = () => {
   
   const [form, dispatch] = useReducer(formReducer, initialState);
+  
+  let {
+		getData,
+	} = useFetch(null);
 
   const handleInput = (e) => {
     
@@ -17,10 +22,14 @@ const MultiForm = () => {
     });
   };
   
-  console.log(initialState);
+  const getInfo = async () =>{
+    const url = `https://swapi.dev/api/`;
+		const result = await getData(url);
+    console.log(result)
+  }
 
   useEffect(()=>{
-    console.log("Hola");
+    getInfo()
   },[])
 
   const nextStep = () => {

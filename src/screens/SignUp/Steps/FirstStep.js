@@ -1,11 +1,43 @@
-import React from 'react';
-import { View, Text, TextInput, StyleSheet, Pressable, Platform } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TextInput, StyleSheet, Pressable, Platform, useWindowDimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ButtonCustomize from '../../../Components/ButtomCustomize';
+import { Button } from 'react-native-web';
+import RenderHTML from 'react-native-render-html';
 
 const FirstStep = ({ nextStep, handleInput, form }) => {
+ 
+  const [{errorEmail, blankEmail,blankContraseña}, setFormErrors] = useState({
+    errorEmail: false,
+    blankEmail: false,
+    blankContraseña: false
+  });
+  
+  const handleSubmit = () => {
+    const regex = /@/;
+    const newErrors = {
+      errorEmail: form.nombre == '' ? "" : !regex.test(form.nombre),
+      blankEmail: form.nombre === '',
+      blankContraseña: form.contraseña === ''
+    };
+  
+    setFormErrors(newErrors);
+  
+    if (newErrors.errorEmail) {
+      handleInput({ name: 'nombre', value: '' });
+    }
+
+    if (Object.values(newErrors).every(error => !error)) {
+      nextStep()
+    }
+  };
+  
+
   return (
     <View style={styles.container}>
+
+  
+
       <Icon name="chevron-left" size={Platform.OS === 'web' ? 40 : 30} color="#000" />
 
       <View style={styles.containerForms}>
@@ -15,10 +47,13 @@ const FirstStep = ({ nextStep, handleInput, form }) => {
           <Text style={styles.label}>Correo electrónico</Text>
           <TextInput
             style={styles.textInput}
-            onChangeText={(text) => handleInput({ name: 'nombre', value: text })}
-            value={form.nombre}
+            onChangeText={(text) => handleInput({ name: 'correo', value: text })}
+            value={form.correo}
             placeholder="Ingresa tu e-mail"
+            autoComplete='email'
           />
+          {errorEmail ? (<Text style={styles.error}>Incluye un signo "@" en tu correo</Text>) : null}
+          {blankEmail ? (<Text style={styles.error}>Completa este campo</Text>) : null }
         </View>
 
         <View style={styles.inputContainer}>
@@ -30,16 +65,15 @@ const FirstStep = ({ nextStep, handleInput, form }) => {
             secureTextEntry={true}
             placeholder="Ingresa tu contraseña"
           />
+          {blankContraseña ? (<Text style={styles.error}>Completa este campo</Text>) : null }
         </View>
 
-        <ButtonCustomize title="Continuar" Press={nextStep} />
+        <ButtonCustomize title="Continuar" Press={handleSubmit} />
       </View>
 
+      
       <View style={styles.registerContainer}>
         <Text style={styles.registerText}>¿Ya tienes una cuenta?</Text>
-        <Pressable>
-          <Text style={styles.registerButton}>Inicia sesión</Text>
-        </Pressable>
       </View>
     </View>
   );
@@ -94,6 +128,12 @@ const styles = StyleSheet.create({
     fontSize: Platform.OS === 'web' ? '1rem' : 16,
     color: '#00f',
   },
+  error:{
+    color:'red',
+    marginTop:2,
+    fontStyle: "italic",
+  },
+
 });
 
 export default FirstStep;
