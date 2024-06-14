@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, Pressable, Platform, useWindowDimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ButtonCustomize from '../../../Components/ButtomCustomize';
-import { Button } from 'react-native-web';
-import RenderHTML from 'react-native-render-html';
 
 const FirstStep = ({ nextStep, handleInput, form }) => {
  
